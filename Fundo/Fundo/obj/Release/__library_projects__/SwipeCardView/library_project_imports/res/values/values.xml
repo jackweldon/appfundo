@@ -1,0 +1,1 @@
+<resources><declare-styleable name="SwipCardsView"><attr format="dimension" name="yOffsetStep" /><attr format="integer" name="alphaOffsetStep" /><attr format="float" name="scaleOffsetStep" /></declare-styleable><string name="app_name">SwipeCardsView</string></resources>

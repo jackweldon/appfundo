@@ -1,0 +1,5 @@
+D:\App\Fundo\Fundo\Fundo.Core\bin\Debug\Fundo.Core.dll
+D:\App\Fundo\Fundo\Fundo.Core\bin\Debug\Fundo.Core.pdb
+D:\App\Fundo\Fundo\Fundo.Core\obj\Debug\Fundo.Core.csprojResolveAssemblyReference.cache
+D:\App\Fundo\Fundo\Fundo.Core\obj\Debug\Fundo.Core.dll
+D:\App\Fundo\Fundo\Fundo.Core\obj\Debug\Fundo.Core.pdb
