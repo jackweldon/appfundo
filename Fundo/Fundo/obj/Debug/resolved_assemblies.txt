@@ -1,5 +1,6 @@
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\Fundo.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\Fundo.Core.dll
+D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\Newtonsoft.Json.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\Square.OkHttp.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\Square.OkIO.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\Square.Picasso.dll
@@ -37,14 +38,15 @@ D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Runtime.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.ComponentModel.Composition.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Resources.ResourceManager.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Collections.dll
+D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Threading.Tasks.dll
+D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Net.Http.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Diagnostics.Debug.dll
+D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Reflection.dll
+D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Runtime.Serialization.dll
+D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.ServiceModel.Internals.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Threading.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Collections.Concurrent.dll
-D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Reflection.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Linq.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Runtime.InteropServices.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Runtime.Extensions.dll
 D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Reflection.Extensions.dll
-D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Net.Http.dll
-D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.Runtime.Serialization.dll
-D:\App\Fundo\Fundo\Fundo\obj\Debug\android\assets\System.ServiceModel.Internals.dll

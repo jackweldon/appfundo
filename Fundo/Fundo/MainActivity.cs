@@ -11,14 +11,17 @@ using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Content.PM;
+using Android.Locations;
 using Com.Huxq17.Swipecardsview;
 using Fundo.Adapter;
 using Fundo.Core;
 using Fundo.Core.Model;
+using Fundo.Core.RestService;
 using Fundo.Fragments;
+using Newtonsoft.Json;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using SupportFragment = Android.Support.V4.App.Fragment;
-
+//http://android-holo-colors.com/
 namespace Fundo
 {
     [Activity(Label = "Fundo", Icon = "@drawable/icon",Theme="@style/DefaultTheme",
@@ -32,27 +35,56 @@ namespace Fundo
         private LinearLayout mLeftDrawer;
         private SwipeCardsView swipeCardView;
 
-
-        private Stack<SupportFragment> mStackFragment;
-        private SupportFragment mCurrenFragment;
         private HomeFragment mHomeFragment;
         private ProfileFragment mProfileFragment;
         private LikedFragment mLikedFragment;
+
+        private Spinner _spinnerCategory;
+        private SeekBar _priceSeekBar;
+        private Button _searchButton;
+
+        private FundoRestService _fundoRestService;
+        private AppUser _currentAppUser;
+        
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView (Resource.Layout.Main);
-
+            
             mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_search);
             mLeftDrawer = FindViewById<LinearLayout>(Resource.Id.drawer_left);
 
-            #region Frag manager regioi
+            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+            _currentAppUser = JsonConvert.DeserializeObject<AppUser>(pref.GetString("AppUser", String.Empty));
+
+            #region Drawer Variables
+            _priceSeekBar = FindViewById<SeekBar>(Resource.Id.price_seekbar);
+            _priceSeekBar.Max = 200;
+            _priceSeekBar.ProgressChanged += (sender, e) => {
+                if (e.FromUser)
+                {
+                    Toast.MakeText(this, $"The value of the SeekBar is {e.Progress}", ToastLength.Long).Show();
+                }
+            };
+            _spinnerCategory = FindViewById<Spinner>(Resource.Id.category_group);
+            _spinnerCategory.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+            var adapter = ArrayAdapter.CreateFromResource(
+                    this, Resource.Array.groups_array, Android.Resource.Layout.SimpleSpinnerItem);
+
+            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            _spinnerCategory.Adapter = adapter;
+
+
+            _searchButton = FindViewById<Button>(Resource.Id.search_button);
+            _searchButton.Click += SearchButtonOnClick;
+            #endregion
+            #region Frag manager Region
 
             var trans = SupportFragmentManager.BeginTransaction();
 
-            mStackFragment = new Stack<SupportFragment>();
+            new Stack<SupportFragment>();
             mHomeFragment = new HomeFragment();
             mProfileFragment = new ProfileFragment();
             mLikedFragment = new LikedFragment();
@@ -60,8 +92,6 @@ namespace Fundo
 
             trans.Add(Resource.Id.fragmentContainer, mHomeFragment, "Home");
             trans.Commit();
-
-            mCurrenFragment = mHomeFragment;
 
             #endregion
 
@@ -81,8 +111,30 @@ namespace Fundo
             mBottomNavigation = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
 
             mBottomNavigation.NavigationItemSelected += MBottomNavigationOnNavigationItemSelected;
+
+            _fundoRestService = new FundoRestService();
         }
 
+        private async void SearchButtonOnClick(object sender, EventArgs eventArgs)
+        {
+            //search -- user location, categoryy, price, user Id, radius,
+            var items = await _fundoRestService.SearchToDoItemsAsync(new FundoSearchModel());
+
+            LocationManager lm = (LocationManager)GetSystemService(Context.LocationService);
+            Location location = lm.GetLastKnownLocation(LocationManager.GpsProvider);
+            double longitude = location.Longitude;
+            double latitude = location.Latitude;
+
+
+        }
+
+        private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            Spinner spinner = (Spinner)sender;
+
+            string toast = string.Format("The planet is {0}", spinner.GetItemAtPosition(e.Position));
+            Toast.MakeText(this, toast, ToastLength.Long).Show();
+        }
         private void MBottomNavigationOnNavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs menuItem)
         {
             
@@ -106,27 +158,13 @@ namespace Fundo
             if (fragment.IsVisible) return;
 
             var trans = SupportFragmentManager.BeginTransaction();
-           // trans.SetCustomAnimations(Resource.Animation.slide_in, Resource.Animation.slide_out, Resource.Animation.slide_in, Resource.Animation.slide_out);
-
             trans.Replace(Resource.Id.fragmentContainer, fragment);
             trans.AddToBackStack(null);
             trans.Commit();
-
-            mCurrenFragment = fragment;
         }
         public override void OnBackPressed()
         {
-            /*unrequired with replace
-            if (SupportFragmentManager.BackStackEntryCount > 0)
-            {
-                SupportFragmentManager.PopBackStack();
-                mCurrenFragment = mStackFragment.Pop();
-            }
-            else
-            {
-                base.OnBackPressed();
-
-            }*/
+            
             base.OnBackPressed();
         }
 

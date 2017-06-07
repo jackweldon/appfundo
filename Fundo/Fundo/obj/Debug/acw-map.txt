@@ -18,6 +18,10 @@ Fundo.Fragments.HomeFragment, Fundo;md575ce4f329aa6c6cb84844c04388ea536.HomeFrag
 Fundo.Fragments.HomeFragment, Fundo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md575ce4f329aa6c6cb84844c04388ea536.HomeFragment
 Fundo.Fragments.HomeFragment;md575ce4f329aa6c6cb84844c04388ea536.HomeFragment
 fundo.fragments.HomeFragment;md575ce4f329aa6c6cb84844c04388ea536.HomeFragment
+Fundo.Fragments.LeftDrawerFragment, Fundo;md575ce4f329aa6c6cb84844c04388ea536.LeftDrawerFragment
+Fundo.Fragments.LeftDrawerFragment, Fundo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md575ce4f329aa6c6cb84844c04388ea536.LeftDrawerFragment
+Fundo.Fragments.LeftDrawerFragment;md575ce4f329aa6c6cb84844c04388ea536.LeftDrawerFragment
+fundo.fragments.LeftDrawerFragment;md575ce4f329aa6c6cb84844c04388ea536.LeftDrawerFragment
 Fundo.Fragments.LikedFragment, Fundo;md575ce4f329aa6c6cb84844c04388ea536.LikedFragment
 Fundo.Fragments.LikedFragment, Fundo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md575ce4f329aa6c6cb84844c04388ea536.LikedFragment
 Fundo.Fragments.LikedFragment;md575ce4f329aa6c6cb84844c04388ea536.LikedFragment

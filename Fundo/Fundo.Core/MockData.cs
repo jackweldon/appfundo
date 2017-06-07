@@ -16,6 +16,8 @@ namespace Fundo.Core
                 new ToDoItem
                 {
                     Name = "The first one",
+                                        Rating= 1.67f,
+
                     Image = "https://i.ytimg.com/vi/c6KuZyOc8os/hqdefault.jpg",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin metus orci, dictum quis pulvinar vitae," +
@@ -25,6 +27,8 @@ namespace Fundo.Core
                 new ToDoItem
                 {
                     Name = "The next one",
+                                        Rating= 4.67f,
+
                     Image = "http://www.feistees.com/wp-content/uploads/2014/05/squpd.jpg",
                     Description =
                         "Curabitur tempor arcu neque, sit amet vestibulum felis posuere sed. Vivamus finibus rhoncus viverra. Curabitur cursus molestie augue."
@@ -32,6 +36,7 @@ namespace Fundo.Core
                 new ToDoItem
                 {
                     Name = "The other one",
+                    Rating= 2.67f,
                     Image =
                         "https://image.freepik.com/vetores-gratis/resumo-de-fundo-com-um-desenho-geometrico_1048-1511.jpg",
                     Description =

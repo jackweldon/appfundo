@@ -11,6 +11,8 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Fundo.Core.Model;
+using Newtonsoft.Json;
 
 namespace Fundo.Fragments
 {
@@ -28,20 +30,18 @@ namespace Fundo.Fragments
         {
             View view = inflater.Inflate(Resource.Layout.Profile, container, false);
 
-            var sharedPreferences = Activity.ApplicationContext.GetSharedPreferences("UserInfo", FileCreationMode.Append);
-            // then you use
-            var email =sharedPreferences.GetString("Email",String.Empty);
-            if (email != String.Empty)
+            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+
+            AppUser _currentAppUser = JsonConvert.DeserializeObject<AppUser>(pref.GetString("AppUser", String.Empty));
+            if (_currentAppUser != null)
             {
                 mEmail = view.FindViewById<TextView>(Resource.Id.email);
-                mEmail.Text = email;
+                mEmail.Text = _currentAppUser.email;
             }
-
             // Use this to return your custom view for this Fragment
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
             return view;
         }
-
-
+        
     }
 }

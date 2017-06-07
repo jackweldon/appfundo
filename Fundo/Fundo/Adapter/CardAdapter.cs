@@ -39,11 +39,13 @@ namespace Fundo.Adapter
             var imageView = card.FindViewById<ImageView>(Resource.Id.cardImage);
             var heading = card.FindViewById<TextView>(Resource.Id.heading);
             var description = card.FindViewById<TextView>(Resource.Id.description);
-
+            RatingBar ratingbar = (RatingBar)card.FindViewById(Resource.Id.starRatingBar);
+           
             var _item = mList[position];
 
             heading.Text = _item.Name;
             description.Text = _item.Description;
+            ratingbar.Rating = _item.Rating;
             Picasso.With(mContext).Load(_item.Image).Into(imageView);
 
         }

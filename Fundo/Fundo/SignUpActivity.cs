@@ -13,13 +13,15 @@ using Android.Provider;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Widget;
+using Fundo.Core.Model;
+using Newtonsoft.Json;
 using Org.Apache.Http.Impl.IO;
 
 namespace Fundo
 {
 
     //619800327216-4oi6stqie7dvd5906muif291beu4s2hc.apps.googleusercontent.com
-    [Activity(Label = "Sign Up", Icon = "@drawable/icon", Theme = "@style/DefaultTheme",
+    [Activity(Label = "Fundo Sign Up", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/DefaultTheme",
          ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class SignUpActivity : AppCompatActivity, GoogleApiClient.IOnConnectionFailedListener
     {
@@ -28,9 +30,7 @@ namespace Fundo
 
         private bool mSignInClicked;
 
-        private EditText mEmail;
-        private EditText mPassword;
-        private Button   mLogin;
+        private Button mLogin;
 
         private static int RC_SIGN_IN = 9001;
 
@@ -39,15 +39,23 @@ namespace Fundo
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SignUp);
 
-            mGoogleSignIn = FindViewById<SignInButton>(Resource.Id.sign_in_button);
+            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
+            if (pref != null)
+            {
+                AppUser deserializedProduct = JsonConvert.DeserializeObject<AppUser>(pref.GetString("AppUser", String.Empty));
+                if (deserializedProduct != null)
+                {
+                    //todo double check user -- go to db maybe and check email and id, maybe refresh the users likes and stuff?
+                    Intent intent = new Intent(this, typeof(MainActivity));
+                    StartActivity(intent);
+                    return;
+                }
+            }
 
-            mLogin = FindViewById<Button>(Resource.Id.sign_up_btn);
-            mPassword = FindViewById<EditText>(Resource.Id.email);
-            mEmail = FindViewById<EditText>(Resource.Id.password);
+            mGoogleSignIn = FindViewById<SignInButton>(Resource.Id.sign_in_button);
 
 
             mGoogleSignIn.Click += mGoogleSignInOnClick;
-            mLogin.Click += mLoginOnClick;
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
                 .RequestEmail().RequestProfile().RequestId().Build();
@@ -58,21 +66,7 @@ namespace Fundo
 
         }
 
-        private void mLoginOnClick(object sender, EventArgs eventArgs)
-        {
-            //validate username and password
-            //return errors if any
-            //send to db
-            //validate all that
-            //register
-            //sign in 
-            if (mEmail.Text == String.Empty) return;
-            ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
-            ISharedPreferencesEditor edit = pref.Edit();
-            edit.PutString("Email", mEmail.Text);
-            var intent = new Intent(this, typeof(MainActivity));
-            StartActivity(intent);
-        }
+
 
         private void mGoogleSignInOnClick(object sender, EventArgs eventArgs)
         {
@@ -97,6 +91,7 @@ namespace Fundo
                 }
             }
         }
+
         private void HandleSignInResult(GoogleSignInResult result)
         {
 
@@ -108,12 +103,23 @@ namespace Fundo
 
                 ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo", FileCreationMode.Private);
                 ISharedPreferencesEditor edit = pref.Edit();
+                string output = JsonConvert.SerializeObject(new AppUser
+                {
+                    accounts = new AccountInfo
+                    {
+                        type = AccountType.Google,
+                        uid = acct.Id
 
-                edit.PutString("Email", acct.Email);
-                edit.PutString("Id", acct.Id);
+                    },
+                    firstname = acct.GivenName,
+                    lastname = acct.FamilyName,
+                    email = acct.Email
+                });
+                edit.PutString("AppUser", output);
 
                 edit.Apply();
                 var intent = new Intent(this, typeof(MainActivity));
+                intent.AddFlags(Intent.Flags & ActivityFlags.ClearTop);
                 StartActivity(intent);
             }
         }
